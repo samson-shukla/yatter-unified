@@ -33,49 +33,41 @@ export class WebhookController {
   // Handle incoming messages (POST request)
   handleMessage = async (req, res) => {
     try {
-      // Parse the incoming message
+      res.status(200).send("OK"); // ✅ respond first
+
+      // WhatsApp webhook payload can contain multiple entries
       const parsedMessage = this.whatsappService.parseWebhookMessage(req.body);
 
-      if (!parsedMessage) {
-        console.log("No valid message found in webhook");
-        return res.status(200).send("OK");
+      if (!parsedMessage || !parsedMessage.message) {
+        // Likely a delivery/status event, ignore
+        return;
       }
+
+      // console.log("parsedMessage", parsedMessage);
 
       const { from, message, name, type } = parsedMessage;
 
-      // Only process text messages for now
       if (type !== "text" || !message.trim()) {
         console.log(`Ignoring message type: ${type}`);
-        return res.status(200).send("OK");
+        return;
       }
 
-      // console.log(`Processing message from ${from}: ${message}`);
-
-      // Find or create user
       const user = await this.userService.findOrCreateUser(from, name);
 
-      // Check if user is blocked
       if (user.is_blocked) {
         console.log(`User ${from} is blocked`);
-        return res.status(200).send("OK");
+        return;
       }
 
-      // Process the message through AI
       const aiResponse = await this.chatService.processMessage(
         user._id,
         message,
         "whatsapp"
       );
 
-      // Send response back to WhatsApp
       await this.whatsappService.sendTextMessage(from, aiResponse);
-
-      // console.log(`Response sent to ${from}: ${aiResponse}`);
-
-      res.status(200).send("OK");
     } catch (error) {
       console.error("Error handling webhook message:", error);
-      res.status(500).send("Internal Server Error");
     }
   };
 }
