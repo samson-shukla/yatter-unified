@@ -36,6 +36,36 @@ export class WhatsAppService {
     }
   }
 
+  async sendReactionMessage(recipientNumber, messageId, emoji) {
+    try {
+      const url = `${this.baseURL}/messages`;
+      const data = {
+        messaging_product: "whatsapp",
+        to: recipientNumber,
+        type: "reaction",
+        reaction: {
+          message_id: messageId,
+          emoji: emoji, // Use empty string "" to remove reaction
+        },
+      };
+
+      const response = await axios.post(url, data, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "WhatsApp send reaction error:",
+        error.response?.data || error.message
+      );
+      throw new Error("Failed to send WhatsApp reaction");
+    }
+  }
+
   parseWebhookMessage(body) {
     try {
       const entry = body.entry?.[0];

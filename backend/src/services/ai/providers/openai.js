@@ -18,11 +18,15 @@ export class OpenAIService {
         },
       ];
 
-      // Add context messages
-      context.reverse().forEach((ctx) => {
-        messages.push({ role: "user", content: ctx.message });
-        messages.push({ role: "assistant", content: ctx.reply });
-      });
+      // Add context messages with correct property names
+      if (Array.isArray(context) && context.length > 0) {
+        context.reverse().forEach((ctx) => {
+          if (ctx && ctx.userMessage && ctx.aiReply) {
+            messages.push({ role: "user", content: String(ctx.userMessage) });
+            messages.push({ role: "assistant", content: String(ctx.aiReply) });
+          }
+        });
+      }
 
       // Add current message
       messages.push({ role: "user", content: message });

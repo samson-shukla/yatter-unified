@@ -1,20 +1,36 @@
 import User from "../models/User.js";
+import { countryCodes } from "../data/countryCodes.js";
 
 export class UserService {
   async findOrCreateUser(phoneNumber, name = "") {
     try {
-      let user = await User.findOne({ phone_number: phoneNumber });
+      // Normalize phone number (remove + if present)
+      const normalizedPhone = phoneNumber.replace(/^\+/, "");
 
-      // TBI. Check it.
+      let user = await User.findOne({ phone_number: normalizedPhone });
+
       if (!user) {
+        // detect country code by matching longest prefix
+        let detected = null;
+        for (let len = 4; len >= 1; len--) {
+          const prefix = normalizedPhone.substring(0, len);
+          const found = countryCodes.find((c) => c.code === prefix);
+          if (found) {
+            detected = found;
+            break;
+          }
+        }
+
         user = new User({
           display_name: name,
-          phone_number: phoneNumber,
-          country_code: phoneNumber.startsWith("+91") ? "+91" : "+1",
+          phone_number: normalizedPhone,
+          country_code: detected ? detected.code : undefined,
+          country_name: detected ? detected.name : undefined,
           reg_datetime: new Date(),
         });
+
         await user.save();
-        console.log(`New user created: ${phoneNumber}`);
+        console.log(`New user created: ${normalizedPhone}`);
       }
 
       return user;
@@ -24,10 +40,11 @@ export class UserService {
     }
   }
 
-  async incrementMessageCount(userId) {
+  async incrementMessageCount(userId, platform, direction, type) {
     try {
+      const fieldPath = `message_stats.${platform}.${direction}.${type}`;
       await User.findByIdAndUpdate(userId, {
-        $inc: { message_count: 1 },
+        $inc: { [fieldPath]: 1 },
         last_conv: Date.now().toString(),
       });
     } catch (error) {

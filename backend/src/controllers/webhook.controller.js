@@ -2,6 +2,7 @@ import { WhatsAppService } from "../services/platforms/whatsapp.js";
 import { ChatService } from "../services/chat.service.js";
 import { UserService } from "../services/user.service.js";
 import { config } from "../config/environment.js";
+import { loadingEmojiCodes } from "../data/whatsappMessageReplies.js";
 
 export class WebhookController {
   constructor() {
@@ -45,7 +46,7 @@ export class WebhookController {
 
       // console.log("parsedMessage", parsedMessage);
 
-      const { from, message, name, type } = parsedMessage;
+      const { from, message, name, type, messageId } = parsedMessage;
 
       if (type !== "text" || !message.trim()) {
         console.log(`Ignoring message type: ${type}`);
@@ -59,12 +60,20 @@ export class WebhookController {
         return;
       }
 
+      // Sending reaction message to show the processing
+      await this.whatsappService.sendReactionMessage(
+        from,
+        messageId,
+        Object.values(loadingEmojiCodes)[Math.floor(Math.random() * 5)]
+      );
+
       const aiResponse = await this.chatService.processMessage(
         user._id,
         message,
         "whatsapp"
       );
 
+      // Sending response as text message
       await this.whatsappService.sendTextMessage(from, aiResponse);
     } catch (error) {
       console.error("Error handling webhook message:", error);

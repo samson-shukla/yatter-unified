@@ -3,13 +3,15 @@ dotenv.config();
 
 export const config = {
   mongodb: {
-    uri: process.env.MONGODB_URI || "mongodb://localhost:27017/yatter-ai",
+    uri:
+      `${process.env.MONGODB_URI}/yatter_ai_db${process.env.MONGODB_CLUSTER_PARAM}` ||
+      "mongodb://localhost:27017/yatter_ai_db",
   },
   redis: {
     url: process.env.REDIS_URL || "redis://localhost:6379",
   },
   whatsapp: {
-    baseUrl: "https://graph.facebook.com/v22.0",
+    baseUrl: "https://graph.facebook.com/v23.0",
     token: process.env.WHATSAPP_TOKEN,
     verifyToken: process.env.WHATSAPP_VERIFY_TOKEN,
     phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID,

@@ -2,18 +2,20 @@ import mongoose from "mongoose";
 
 const chatSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  platform: { type: String, required: true },
-  messages: [
-    {
-      role: { type: String, enum: ["user", "assistant"], required: true },
-      content: String,
-      timestamp: { type: Date, default: Date.now },
-      ai_provider: String,
-      tokens_used: Number,
-    },
-  ],
+  platform: {
+    type: String,
+    enum: ["whatsapp", "telegram", "instagram"],
+    required: true,
+  },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
+  last_message: String,
+  message_count: { type: Number, default: 0 },
+  audio_count: { type: Number, default: 0 },
+  image_count: { type: Number, default: 0 },
 });
 
-export default mongoose.model("Chat", chatSchema);
+chatSchema.index({ userId: 1, platform: 1 }, { unique: true });
+
+const Chat = mongoose.models.Chat || mongoose.model("Chat", chatSchema);
+export default Chat;

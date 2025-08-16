@@ -16,7 +16,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   display_name: String,
-  phone_number: { type: String, required: true, unique: true },
+  phone_number: { type: String, unique: true, sparse: true },
   country_code: String,
   reg_datetime: { type: Date, default: Date.now },
   subscription_status: { type: Boolean, default: false },
