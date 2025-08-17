@@ -21,12 +21,20 @@ export class UserService {
           }
         }
 
+        const now = new Date();
+
         user = new User({
           display_name: name,
           phone_number: normalizedPhone,
           country_code: detected ? detected.code : undefined,
           country_name: detected ? detected.name : undefined,
-          reg_datetime: new Date(),
+          reg_datetime: now,
+          subscription_datetime: now,
+          subscription_package: "trial",
+          subscription_status: false,
+          partial_streaming: false,
+          preferred_language: "eng",
+          location: detected ? detected.name : undefined,
         });
 
         await user.save();

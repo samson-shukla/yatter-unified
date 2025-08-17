@@ -14,8 +14,6 @@ const userSchema = new mongoose.Schema({
   user_verified: { type: Boolean, default: false },
   is_blocked: { type: Boolean, default: false },
   partial_streaming: { type: Boolean, default: false },
-
-  // moved counts to chat/messages, so we keep this clean
   preferred_language: String,
   location: String,
   work: String,

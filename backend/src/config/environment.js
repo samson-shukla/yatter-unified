@@ -9,6 +9,7 @@ export const config = {
   },
   redis: {
     url: process.env.REDIS_URL || "redis://localhost:6379",
+    contextExpirationTime: 86400, // 24 hours
   },
   whatsapp: {
     baseUrl: "https://graph.facebook.com/v23.0",

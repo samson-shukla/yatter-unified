@@ -7,6 +7,11 @@ const chatSchema = new mongoose.Schema({
     enum: ["whatsapp", "telegram", "instagram"],
     required: true,
   },
+  platform_user_id: {
+    type: String,
+    // whatsapp: phone number, telegram: telegram_id, instagram: instagram_id
+  },
+  is_open: { type: Boolean, default: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
   last_message: String,
