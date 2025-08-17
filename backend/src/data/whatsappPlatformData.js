@@ -4,6 +4,8 @@ export const loadingEmojiCodes = {
   reply3: "\uD83D\uDD04", // refresh or loader
   reply4: "\uD83E\uDDD0", // face with monocle
   reply5: "\uD83D\uDC4D", // thumbs up
+
+  commands: "⚙️",
 };
 
 export const availableCommands = [
@@ -34,18 +36,14 @@ export const availableCommands = [
 export const messageReplies = {
   // General Instructions
   general: {
-    languageChangedToEng:
-      "👋 Hi, your preferred app language is updated to English now!",
-    languageChangedToSpa:
-      "👋 ¡Hola! ¡Tu idioma preferido de la aplicación se ha actualizado a español ahora!",
-    languageChangedToFra:
-      "👋 Salut ! Votre langue préférée de l'application est maintenant mise à jour en français !",
-    languageChangedToPor:
-      "👋 Oi! Seu idioma preferido do aplicativo foi atualizado para português agora!",
-    languageChangedToHin:
-      "👋 नमस्ते! आपकी पसंदीदा एप्लिकेशन भाषा अब हिन्दी में अपडेट हो गई है!",
-    languageChangedToHeb:
-      "👋 שלום! שפת האפליקציה המועדפת עליך עודכנה לעברית כעת!",
+    languageChangedTo: {
+      eng: "👋 Hi, your preferred app language is updated to English now!",
+      spa: "👋 ¡Hola! ¡Tu idioma preferido de la aplicación se ha actualizado a español ahora!",
+      fra: "👋 Salut ! Votre langue préférée de l'application est maintenant mise à jour en français !",
+      hin: "👋 नमस्ते! आपकी पसंदीदा एप्लिकेशन भाषा अब हिन्दी में अपडेट हो गई है!",
+      por: "👋 Oi! Seu idioma preferido do aplicativo foi atualizado para português agora!",
+      heb: "👋 שלום! שפת האפליקציה המועדפת עליך עודכנה לעברית כעת!",
+    },
 
     loadingEmojis: {
       reply1: "🤔🔍🤔",
@@ -1167,5 +1165,618 @@ export const messageReplies = {
     },
 
     maintenance: "Yatter נמצא כעת בתחזוקה. אנא נסה שוב לאחר 15 דקות 🙏",
+  },
+};
+
+export const listReplies = {
+  // This is the demo of list message to be kept here
+  // test: {
+  //   bodyText: "",
+  //   footerText: "",
+  //   actionButtonText: "",
+  //   actionSections: [],
+  // },
+
+  general: {
+    language: {
+      actionSections: [
+        {
+          title: "Languages",
+          rows: [
+            {
+              id: "lang_eng",
+              title: "🇺🇸 English",
+              description: "Set your preferred language to English",
+            },
+            {
+              id: "lang_hin",
+              title: "🇮🇳 हिन्दी",
+              description: "अपनी पसंदीदा भाषा हिंदी पर सेट करें",
+            },
+            {
+              id: "lang_spa",
+              title: "🇪🇸 Español",
+              description: "Establece tu idioma preferido en español",
+            },
+            {
+              id: "lang_fra",
+              title: "🇫🇷 Français",
+              description: "Définissez votre langue préférée sur le français",
+            },
+            {
+              id: "lang_heb",
+              title: "עברית 🇮🇱",
+              description: "הגדר את השפה המועדפת עליך לעברית",
+            },
+            {
+              id: "lang_por",
+              title: "🇵🇹 Português",
+              description: "Defina seu idioma preferido para português",
+            },
+          ],
+        },
+      ],
+    },
+
+    footerBranding: "Yatter by Infokey",
+  },
+
+  eng: {
+    menu: {
+      bodyText:
+        "🔍 Discover the power of AI on your WhatsApp with Yatter. Have a look at the menu and explore what Yatter can do for you.",
+      actionButtonText: "MENU",
+      actionSections: [
+        {
+          title: "Yatter Menu",
+          rows: [
+            {
+              id: "language",
+              title: "🗣️ Language",
+              description: "Select your preferred app language.",
+            },
+            {
+              id: "profile",
+              title: "😎 Profile",
+              description: "Get your profile & subscription information.",
+            },
+            {
+              id: "commands",
+              title: "⚙️ Commands",
+              description: "Learn all chat commands",
+            },
+            {
+              id: "features",
+              title: "🎯 Features",
+              description: "Learn about latest features and how to use it.",
+            },
+            // {
+            //   id: "updates",
+            //   title: "📆 Updates",
+            //   description: "Learn about latest updates on Yatter.",
+            // },
+            {
+              id: "offers",
+              title: "🎁 Offers",
+              description: "Get exclusive offers on Yatter Subscription.",
+            },
+          ],
+        },
+        {
+          title: "Chat Menu",
+          rows: [
+            {
+              id: "clear",
+              title: "🔄 Clear Chat",
+              description: "Clear conversation context and start a new chat.",
+            },
+            {
+              id: "stream",
+              title: "🎥 Partial Streaming",
+              description: "Toggle chat text streaming.",
+            },
+            {
+              id: "delete_all_reminders",
+              title: "📵 Delete All Reminders",
+              description: "Delete all reminders",
+            },
+          ],
+        },
+        {
+          title: "Connect with Us",
+          rows: [
+            {
+              id: "socials",
+              title: "📱 Socials",
+              description: "Follow Yatter on Social Media.",
+            },
+            {
+              id: "help",
+              title: "❓ Help",
+              description: "Get Yatter help and support information.",
+            },
+          ],
+        },
+      ],
+    },
+
+    language: {
+      bodyText:
+        "Please select your preferred language to get instructions and help. \n\n🇮🇳 🇺🇸 🇪🇸 🇫🇷 🇵🇹 🇮🇱",
+      actionButtonText: "Select Language",
+      actionSections: [],
+    },
+
+    payment: {
+      bodyText: "Please tap the link below to complete your payment 👇",
+      actionButtonText: "More",
+      actionSections: [
+        {
+          // title: "Yatter Menu",
+          rows: [
+            {
+              id: "help",
+              title: "🆘 Help",
+              description: "Need any help for completing your payment?",
+            },
+            {
+              id: "reset",
+              title: "🔄 Reset",
+              description:
+                "Selected a wrong subscription plan? Reset the payment link.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  spa: {
+    menu: {
+      bodyText:
+        "🔍 Descubre el poder de la IA en tu WhatsApp con Yatter. ✨ Echa un vistazo al menú y explora lo que Yatter puede hacer por ti.",
+      actionButtonText: "MENÚ",
+      actionSections: [
+        {
+          title: "Yatter Menú",
+          rows: [
+            {
+              id: "language",
+              title: "🗣️ Idioma",
+              description: "Seleccione el idioma de su aplicación preferido.",
+            },
+            {
+              id: "profile",
+              title: "😎 Perfil",
+              description: "Obtenga su perfil e información de suscripción.",
+            },
+            {
+              id: "commands",
+              title: "⚙️ Comandos",
+              description: "Aprende todos los comandos del chat",
+            },
+            {
+              id: "features",
+              title: "🎯 Características",
+              description:
+                "Conozca las funciones más recientes y cómo usarlas.",
+            },
+            // {
+            //   id: "updates",
+            //   title: "📆 Actualizaciones",
+            //   description:
+            //     "Obtenga más información sobre las últimas actualizaciones de Yatter.",
+            // },
+            {
+              id: "offers",
+              title: "🎁 Ofertas",
+              description:
+                "Obtenga ofertas exclusivas en la suscripción a Yatter.",
+            },
+          ],
+        },
+        {
+          title: "Menú de chat",
+          rows: [
+            {
+              id: "clear",
+              title: "🔄 Vacie la conversacion",
+              description:
+                "Borre el contexto de la conversación e inicie un nuevo chat.",
+            },
+            {
+              id: "stream",
+              title: "🎥 Transmisión Parcial",
+              description: "Alternar transmisión de texto de chat.",
+            },
+            {
+              id: "delete_all_reminders",
+              title: "📵 Eliminar todos los recordatorios",
+              description: "Eliminar todos los recordatorios",
+            },
+          ],
+        },
+        {
+          title: "Conéctate con nosotros",
+          rows: [
+            {
+              id: "socials",
+              title: "📱 Sociales",
+              description: "Siga a Yatter en las redes sociales.",
+            },
+            {
+              id: "help",
+              title: "❓ Ayuda",
+              description: "Obtenga ayuda e información de soporte de Yatter.",
+            },
+          ],
+        },
+      ],
+    },
+
+    language: {
+      bodyText:
+        "Seleccione su idioma preferido para obtener instrucciones y ayuda. \n\n🇮🇳 🇺🇸 🇪🇸 🇫🇷 🇵🇹 🇮🇱",
+      actionButtonText: "Seleccione el idioma",
+      actionSections: [],
+    },
+  },
+
+  fra: {
+    menu: {
+      bodyText:
+        "🔍 Découvrez la puissance de l'IA sur votre WhatsApp avec Yatter. ✨ Jetez un œil au menu et découvrez ce que Yatter peut faire pour vous.",
+      actionButtonText: "MENU",
+      actionSections: [
+        {
+          title: "Yatter Menu",
+          rows: [
+            {
+              id: "language",
+              title: "🗣️ Langue",
+              description:
+                "Sélectionnez la langue de votre application préférée.",
+            },
+            {
+              id: "profile",
+              title: "😎 Profil",
+              description:
+                "Obtenez votre profil et vos informations d'abonnement.",
+            },
+            {
+              id: "commands",
+              title: "⚙️ Commandes",
+              description: "Apprenez toutes les commandes de chat",
+            },
+            {
+              id: "features",
+              title: "🎯 Caractéristiques",
+              description:
+                "Découvrez les dernières fonctionnalités et comment les utiliser.",
+            },
+            // {
+            //   id: "updates",
+            //   title: "📆 Mises à jour",
+            //   description: "Découvrez les dernières mises à jour sur Yatter.",
+            // },
+            {
+              id: "offers",
+              title: "🎁 Des offres",
+              description:
+                "Recevez des offres exclusives sur l'abonnement Yatter.",
+            },
+          ],
+        },
+        {
+          title: "Menu de discussion",
+          rows: [
+            {
+              id: "clear",
+              title: "🔄 Effacer le chat",
+              description:
+                "Effacez le contexte de la conversation et démarrez une nouvelle discussion.",
+            },
+            {
+              id: "stream",
+              title: "🎥 Streaming Partiel",
+              description: "Activer la diffusion en continu du texte du chat.",
+            },
+            {
+              id: "delete_all_reminders",
+              title: "📵 Supprimer tous les rappels",
+              description: "Supprimer tous les rappels",
+            },
+          ],
+        },
+        {
+          title: "Connecte-toi avec nous",
+          rows: [
+            {
+              id: "socials",
+              title: "📱 Réseaux sociaux",
+              description: "Suivez Yatter sur les réseaux sociaux.",
+            },
+            {
+              id: "help",
+              title: "❓ Aide",
+              description:
+                "Obtenez de l'aide et des informations d'assistance Yatter.",
+            },
+          ],
+        },
+      ],
+    },
+
+    language: {
+      bodyText:
+        "Veuillez sélectionner votre langue préférée pour obtenir des instructions et de l'aide. \n\n🇮🇳 🇺🇸 🇪🇸 🇫🇷 🇵🇹 🇮🇱",
+      actionButtonText: "Choisir la langue",
+      actionSections: [],
+    },
+  },
+
+  por: {
+    menu: {
+      bodyText:
+        "🔍 Descubra o poder da IA no seu WhatsApp com o Yatter. ✨ Dê uma olhada no cardápio e explore o que o Yatter pode fazer por você.",
+      actionButtonText: "CARDÁPIO",
+      actionSections: [
+        {
+          title: "Yatter Cardápio",
+          rows: [
+            {
+              id: "language",
+              title: "🗣️ Linguagem",
+              description: "Selecione o idioma do seu aplicativo preferido.",
+            },
+            {
+              id: "profile",
+              title: "😎 Perfil",
+              description: "Obtenha seu perfil e informações de assinatura.",
+            },
+            {
+              id: "commands",
+              title: "⚙️ Comandos",
+              description: "Aprenda todos os comandos do chat",
+            },
+            {
+              id: "features",
+              title: "🎯 Características",
+              description:
+                "Aprenda sobre os recursos mais recentes e como usá-los.",
+            },
+            // {
+            //   id: "updates",
+            //   title: "📆 Atualizações",
+            //   description:
+            //     "Saiba mais sobre as últimas atualizações do Yatter.",
+            // },
+            {
+              id: "offers",
+              title: "🎁 Ofertas",
+              description: "Receba ofertas exclusivas na assinatura do Yatter.",
+            },
+          ],
+        },
+        {
+          title: "Menu",
+          rows: [
+            {
+              id: "clear",
+              title: "🔄 Limpar conversa",
+              description:
+                "Limpe o contexto da conversa e inicie um novo bate-papo.",
+            },
+            {
+              id: "stream",
+              title: "🎥 Transmissão Parcial",
+              description: "Alternar streaming de texto de bate-papo.",
+            },
+            {
+              id: "delete_all_reminders",
+              title: "📵 Excluir todos os lembretes",
+              description: "Excluir todos os lembretes",
+            },
+          ],
+        },
+        {
+          title: "Conecte-se",
+          rows: [
+            {
+              id: "socials",
+              title: "📱 Redes Sociais",
+              description: "Siga Yatter nas redes sociais.",
+            },
+            {
+              id: "help",
+              title: "❓ Ajuda",
+              description: "Obtenha ajuda e informações de suporte do Yatter.",
+            },
+          ],
+        },
+      ],
+    },
+
+    language: {
+      bodyText:
+        "Selecione seu idioma preferido para obter instruções e ajuda. \n\n🇮🇳 🇺🇸 🇪🇸 🇫🇷 🇵🇹 🇮🇱",
+      actionButtonText: "Selecione o idioma",
+      actionSections: [],
+    },
+  },
+
+  hin: {
+    menu: {
+      bodyText:
+        "🔍 येटर के साथ अपने व्हाट्सएप पर एआई की शक्ति का अनुभव करें। ✨ मेनू पर एक नज़र डालें और जानें कि येटर आपके लिए क्या कर सकता है।",
+      actionButtonText: "मेन्यू",
+      actionSections: [
+        {
+          title: "येटर मेनू",
+          rows: [
+            {
+              id: "language",
+              title: "🗣️ भाषा",
+              description: "अपनी पसंदीदा ऐप भाषा चुनें",
+            },
+            {
+              id: "profile",
+              title: "😎 प्रोफ़ाइल",
+              description: "अपनी प्रोफ़ाइल और सदस्यता जानकारी प्राप्त करें",
+            },
+            {
+              id: "commands",
+              title: "⚙️ आदेश",
+              description: "सभी चैट कमांड जानें",
+            },
+            {
+              id: "features",
+              title: "🎯 विशेषताएँ",
+              description:
+                "नवीनतम सुविधाओं और इसका उपयोग करने के तरीके के बारे में जानें",
+            },
+            // {
+            //   id: "updates",
+            //   title: "📆 अपडेट",
+            //   description: "येटर पर नवीनतम अपडेट के बारे में जानें",
+            // },
+            {
+              id: "offers",
+              title: "🎁 ऑफर",
+              description: "येटर सब्सक्रिप्शन पर विशेष ऑफर प्राप्त करें",
+            },
+          ],
+        },
+        {
+          title: "चैट मेनू",
+          rows: [
+            {
+              id: "clear",
+              title: "🔄 चैट रीसेट करें",
+              description: "बातचीत का संदर्भ साफ़ करें और एक नई चैट शुरू करें",
+            },
+            {
+              id: "stream",
+              title: "🎥 आंशिक स्ट्रीमिंग",
+              description: "चैट टेक्स्ट स्ट्रीमिंग टॉगल करें",
+            },
+            {
+              id: "delete_all_reminders",
+              title: "📵 सभी अनुस्मारक हटाएँ",
+              description: "सभी अनुस्मारक हटाएँ",
+            },
+          ],
+        },
+        {
+          title: "हमारे साथ जुड़ें",
+          rows: [
+            {
+              id: "socials",
+              title: "📱 सामाजिक मीडिया",
+              description: "सोशल मीडिया पर येटर को फॉलो करें",
+            },
+            {
+              id: "help",
+              title: "❓ सहायता",
+              description: "येटर सहायता और समर्थन जानकारी प्राप्त करें",
+            },
+          ],
+        },
+      ],
+    },
+
+    language: {
+      bodyText:
+        "निर्देश और सहायता प्राप्त करने के लिए कृपया अपनी पसंदीदा भाषा चुनें| \n\n🇮🇳 🇺🇸 🇪🇸 🇫🇷 🇵🇹 🇮🇱",
+      actionButtonText: "भाषा चुने",
+      actionSections: [],
+    },
+  },
+
+  heb: {
+    menu: {
+      bodyText:
+        "🔍 גלה את העוצמה של AI ב-WhatsApp שלך עם Yatter. ✨ הסתכלו בתפריט וגלו מה Yatter יכול לעשות עבורכם",
+      actionButtonText: "תַפרִיט",
+      actionSections: [
+        {
+          title: "תפריט יאטר",
+          rows: [
+            {
+              id: "language",
+              title: "🗣️ שפה",
+              description: "בחר את שפת האפליקציה המועדפת עליך",
+            },
+            {
+              id: "profile",
+              title: "😎 פּרוֹפִיל",
+              description: "קבל את פרטי הפרופיל וההרשמה שלך",
+            },
+            {
+              id: "commands",
+              title: "⚙️ פקודות",
+              description: "למד את כל פקודות הצ'אט",
+            },
+            {
+              id: "features",
+              title: "🎯 כל התכונות",
+              description: "למד על התכונות העדכניות ביותר וכיצד להשתמש בהן",
+            },
+            // {
+            //   id: "updates",
+            //   title: "📆 עדכונים",
+            //   description: "למד על העדכונים האחרונים על Yatter",
+            // },
+            {
+              id: "offers",
+              title: "🎁 הנחה",
+              description: "קבל הצעות בלעדיות על מנוי Yatter",
+            },
+          ],
+        },
+        {
+          title: "תפריט צ'אט",
+          rows: [
+            {
+              id: "clear",
+              title: "🔄 אפס את הצ'אט",
+              description: "נקה את הקשר השיחה והתחל צ'אט חדש",
+            },
+            {
+              id: "stream",
+              title: "🎥 סטרימינג חלקי",
+              description: "החלף את הזרמת הטקסט בצ'אט",
+            },
+            {
+              id: "delete_all_reminders",
+              title: "📵 מחק את כל התזכורות",
+              description: "מחק את כל התזכורות",
+            },
+          ],
+        },
+        {
+          title: "Connect with Us",
+          rows: [
+            {
+              id: "socials",
+              title: "📱 מדיה חברתית",
+              description: "עקוב אחר Yatter במדיה החברתית",
+            },
+            {
+              id: "help",
+              title: "❓ עֶזרָה",
+              description: "קבל מידע על עזרה ותמיכה של Yatter",
+            },
+          ],
+        },
+      ],
+    },
+
+    language: {
+      bodyText:
+        "אנא בחר את השפה המועדפת עליך כדי לקבל הוראות ועזרה. \n\n🇮🇳 🇺🇸 🇪🇸 🇫🇷 🇵🇹 🇮🇱",
+      actionButtonText: "בחר שפה",
+      actionSections: [],
+    },
   },
 };

@@ -40,4 +40,11 @@ class PlatformManager {
       content: audioUrl,
     });
   }
+
+  async sendInteractiveMessage(platform, recipient, interactiveMessage) {
+    return this.sendMessage(platform, recipient, {
+      type: "interactive",
+      content: interactiveMessage,
+    });
+  }
 }

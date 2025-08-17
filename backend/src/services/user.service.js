@@ -75,4 +75,17 @@ export class UserService {
       console.error("Error updating usage:", error);
     }
   }
+
+  async updateUserField(userId, fieldUpdates) {
+    try {
+      const user = await User.findByIdAndUpdate(userId, fieldUpdates, {
+        new: true,
+        runValidators: true,
+      });
+      return user;
+    } catch (error) {
+      console.error("Error updating user field:", error);
+      throw error;
+    }
+  }
 }

@@ -65,4 +65,23 @@ export class ContextService {
       console.error("Error adding to context:", error);
     }
   }
+
+  async clearContext(userId, platform = null) {
+    try {
+      if (platform) {
+        const key = `context:${userId}:${platform}`;
+        await redis.del(key);
+      } else {
+        const pattern = `context:${userId}:*`;
+        const keys = await redis.keys(pattern);
+        if (keys.length > 0) {
+          await redis.del(...keys);
+        }
+      }
+      return true;
+    } catch (error) {
+      console.error("Error clearing context:", error);
+      return false;
+    }
+  }
 }

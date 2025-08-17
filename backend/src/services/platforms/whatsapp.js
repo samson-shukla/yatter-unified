@@ -36,6 +36,33 @@ export class WhatsAppService {
     }
   }
 
+  async sendInteractiveMessage(recipientNumber, interactiveMessage) {
+    try {
+      const url = `${this.baseURL}/messages`;
+      const data = {
+        messaging_product: "whatsapp",
+        to: recipientNumber,
+        type: "interactive",
+        interactive: interactiveMessage,
+      };
+
+      const response = await axios.post(url, data, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "WhatsApp send message error:",
+        error.response?.data || error.message
+      );
+      throw new Error("Failed to send WhatsApp message");
+    }
+  }
+
   async sendReactionMessage(recipientNumber, messageId, emoji) {
     try {
       const url = `${this.baseURL}/messages`;

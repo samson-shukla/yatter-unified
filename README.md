@@ -1,8 +1,8 @@
-## WaBM App by InfoKey
-This repository contains the frontend of Whatsapp Business Management App "WaBM".
+## Yatter (Unified)
+This repository contains the Yatter's new app which merges all its functionalities into one.
+Here, the app can receive messages or prompts from WhatsApp, Telegram, Instagram and can work as a Web app too.
 
-### Check out the app here! > <a href="https://app.wabm.in/" target="_blank">WaBM - WhatsApp with Super Powers</a>
+### Will be live on <a href="https://yatterplus.in/" target="_blank">Yatter AI Unified</a> later.
 
 ### Note:
-build cmd for render --> "build": "NODE_OPTIONS=--max_old_space_size=4096 react-scripts build",
-build else --> "build": "react-scripts build"
+To run --> open backend in the redis running environment and type ```npm run start```

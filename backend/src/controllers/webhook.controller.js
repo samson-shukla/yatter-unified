@@ -94,11 +94,11 @@ export class WebhookController {
           return;
         }
 
-        // Send reaction to show processing
+        // Send reaction to show processing for command messages
         await this.whatsappService.sendReactionMessage(
           from,
           messageId,
-          "⚡" // Different emoji for commands
+          loadingEmojiCodes.commands
         );
 
         // Handle the command using CommandService
@@ -112,8 +112,7 @@ export class WebhookController {
         return;
       }
 
-      // Regular message processing (non-command)
-      // Sending reaction message to show the processing
+      // Sending reaction message to show the processing for non-command messages
       await this.whatsappService.sendReactionMessage(
         from,
         messageId,

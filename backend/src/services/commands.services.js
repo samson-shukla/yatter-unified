@@ -1,7 +1,11 @@
 import { ChatService } from "./chat.service.js";
 import { UserService } from "./user.service.js";
-
-import { availableCommands } from "../data/whatsappPlatformData.js";
+import {
+  listReplies,
+  messageReplies,
+  availableCommands,
+} from "../data/whatsappPlatformData.js";
+import { interactiveMessageFormulator } from "../utils/whatsappHelpers.js";
 
 export class CommandService {
   constructor() {
@@ -11,6 +15,26 @@ export class CommandService {
     // Available commands
     this.availableCommands = availableCommands;
   }
+
+  // Helper function to get language-specific messages
+  getLanguageMessages = (userLanguage) => {
+    // userLanguage is stored as code (eng, spa, etc.)
+    const langCode = userLanguage || "eng"; // Default to English
+    return messageReplies[langCode] || messageReplies.eng;
+  };
+
+  // Helper to convert language code to full name for display
+  getLanguageDisplayName = (langCode) => {
+    const languageNames = {
+      eng: "English",
+      spa: "Spanish",
+      fra: "French",
+      por: "Portuguese",
+      hin: "Hindi",
+      heb: "Hebrew",
+    };
+    return languageNames[langCode] || "English";
+  };
 
   // Check if message is a command
   isCommand = (message) => {
@@ -41,7 +65,7 @@ export class CommandService {
     try {
       switch (command) {
         case "clear":
-          return await this.handleClearCommand(user._id);
+          return await this.handleClearCommand(user._id, user, platform);
 
         case "imagine":
           return await this.handleImagineCommand(user, parameters, platform);
@@ -50,7 +74,7 @@ export class CommandService {
           return await this.handleWebSearchCommand(user, parameters, platform);
 
         case "menu":
-          return await this.handleMenuCommand(platform);
+          return await this.handleMenuCommand(user, platform);
 
         case "profile":
           return await this.handleProfileCommand(user, platform);
@@ -87,9 +111,22 @@ export class CommandService {
   };
 
   // Command handler methods
-  handleClearCommand = async (userId) => {
-    await this.chatService.clearContext(userId);
-    return "✅ Chat context cleared successfully!";
+  handleClearCommand = async (userId, user, platform) => {
+    try {
+      // Clear context in Redis for this platform
+      await this.chatService.contextService.clearContext(userId, platform);
+
+      // Close current chat (set is_open: false)
+      await this.chatService.closeChat(userId, platform);
+
+      // Get language-specific message
+      const messages = this.getLanguageMessages(user.preferred_language);
+      return messages.chat.clearContext;
+    } catch (error) {
+      console.error("Error in handleClearCommand:", error);
+      const messages = this.getLanguageMessages(user.preferred_language);
+      return messages.onError.unknownError;
+    }
   };
 
   handleImagineCommand = async (user, parameters, platform) => {
@@ -108,33 +145,39 @@ export class CommandService {
     return `🔍 Searching for: "${parameters}"...`;
   };
 
-  handleMenuCommand = async (platform) => {
-    return (
-      "📋 *Main Menu*\n\n" +
-      "• .commands - View all commands\n" +
-      "• .profile - Your profile info\n" +
-      "• .help - Get assistance\n" +
-      "• .clear - Clear chat context\n" +
-      "• .language - Change language"
+  handleMenuCommand = async (user, platform) => {
+    return interactiveMessageFormulator(
+      listReplies[user?.preferred_language].menu.bodyText,
+      listReplies[user?.preferred_language].menu.actionButtonText,
+      listReplies[user?.preferred_language].menu.actionSections,
+      "",
+      listReplies.general.footerBranding
     );
   };
 
   handleProfileCommand = async (user, platform) => {
     return (
       `👤 *Your Profile*\n\n` +
-      `Name: ${user.name}\n` +
+      `Name: ${user.name ? user.name : user?.display_name}\n` +
       `Platform: ${platform}\n` +
       `Language: ${user.language || "English"}\n` +
-      `Joined: ${user.created_at}`
+      `Location: ${user.location}\n` +
+      `Partial Streaming: ${user.partial_streaming}\n` +
+      "\nSubscription:\n" +
+      `Status: ${user.subscription_status}\n` +
+      `Package: ${user.subscription_package}\n` +
+      "\nMessage Stats:\n" +
+      `Incoming: ${user?.message_stats?.[platform]?.incoming}\n` +
+      `Outgoing: ${user?.message_stats?.[platform]?.outgoing}`
     );
   };
 
   handleCommandsListCommand = async (platform) => {
     const commandsList = this.availableCommands
-      .map((cmd) => `• .${cmd}`)
+      .map((cmd) => `/${cmd}`)
       .join("\n");
 
-    return `🤖 *Available Commands*\n\n${commandsList}\n\nTip: You can also use / instead of .`;
+    return `🤖 *Available Commands*\n\n${commandsList}\n\nTip: You can also use . instead of /`;
   };
 
   handleLanguageCommand = async (user, parameters, platform) => {
@@ -154,18 +197,20 @@ export class CommandService {
 
   handleLanguageChangeCommand = async (user, command, platform) => {
     const langMap = {
-      lang_eng: "English",
-      lang_hin: "Hindi",
-      lang_spa: "Spanish",
-      lang_fra: "French",
-      lang_heb: "Hebrew",
-      lang_por: "Portuguese",
+      lang_eng: "eng",
+      lang_hin: "hin",
+      lang_spa: "spa",
+      lang_fra: "fra",
+      lang_heb: "heb",
+      lang_por: "por",
     };
 
     const language = langMap[command];
     if (language) {
-      await this.userService.updateUserLanguage(user._id, language);
-      return `✅ Language changed to ${language}`;
+      await this.userService.updateUserField(user._id, {
+        preferred_language: language,
+      });
+      return messageReplies.general.languageChangedTo?.[language];
     }
     return "❌ Invalid language selection.";
   };
